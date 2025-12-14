@@ -1,0 +1,135 @@
+"use client";
+import { ReactNode, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import {
+  Menu,
+  X,
+  LayoutDashboard,
+  DoorOpen,
+  Calendar,
+  Users,
+  BarChart3,
+  Settings,
+  LogOut,
+  Inbox,
+  Briefcase,
+} from "lucide-react";
+
+interface DashboardLayoutProps {
+  children: ReactNode;
+}
+
+const sidebarLinks = [
+  { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
+  { icon: DoorOpen, label: "Rooms", path: "/dashboard/rooms" },
+  { icon: Calendar, label: "Bookings", path: "/dashboard/bookings" },
+  { icon: Calendar, label: "Booking Engine", path: "/dashboard/booking-engine" },
+  { icon: Users, label: "Guests", path: "/dashboard/guests" },
+  { icon: Briefcase, label: "Staff", path: "/dashboard/staff" },
+  { icon: BarChart3, label: "Reports", path: "/dashboard/reports" },
+  { icon: Settings, label: "Settings", path: "/dashboard/settings" },
+];
+
+export function DashboardLayout({ children }: DashboardLayoutProps) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const pathname = usePathname();
+
+  return (
+    <div className="min-h-screen bg-slate-50 flex">
+      {/* Sidebar */}
+      <div
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-border transition-transform duration-200 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+        }`}
+      >
+        <div className="h-16 flex items-center justify-between px-6 border-b border-border">
+          <Link href="/dashboard" className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-lg">H</span>
+            </div>
+            <span className="font-bold text-lg text-foreground hidden lg:block">HotelHub</span>
+          </Link>
+          <button
+            className="md:hidden"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <X size={24} />
+          </button>
+        </div>
+
+        <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-2">
+          {sidebarLinks.map((link) => {
+            const Icon = link.icon;
+            const isActive = pathname === link.path;
+
+            return (
+              <Link
+                key={link.path}
+                href={link.path}
+                onClick={() => setSidebarOpen(false)}
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
+                  isActive
+                    ? "bg-primary text-white"
+                    : "text-muted-foreground hover:bg-slate-100"
+                }`}
+              >
+                <Icon size={20} />
+                <span className="font-medium">{link.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="border-t border-border p-4">
+          {/* <Button */}
+            {/*   variant="outline"
+            className="w-full justify-start gap-2"
+            asChild
+          >
+            <Link href="/Auth/Login">
+              <LogOut size={20} />
+              Logout
+            </Link>
+          </Button> */}
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 md:ml-64">
+        {/* Top Bar */}
+        <div className="h-16 bg-white border-b border-border flex items-center justify-between px-6 sticky top-0 z-40">
+          <button
+            className="md:hidden p-2"
+            onClick={() => setSidebarOpen(true)}
+          >
+            <Menu size={24} />
+          </button>
+          <div className="flex-1" />
+          <div className="flex items-center gap-4">
+            <button className="p-2 hover:bg-slate-100 rounded-lg">
+              <Inbox size={20} />
+            </button>
+            <button className="w-10 h-10 bg-primary rounded-full text-white font-bold flex items-center justify-center">
+              A
+            </button>
+          </div>
+        </div>
+
+        {/* Content */}
+        <main className="p-6 md:p-8">
+          {children}
+        </main>
+      </div>
+
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+    </div>
+  );
+}
