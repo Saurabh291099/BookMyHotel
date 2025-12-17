@@ -3,23 +3,22 @@ import {
   Post,
   Body,
   BadRequestException,
-  UnauthorizedException,
 } from '@nestjs/common';
+import { LoginService } from './login.service';
+import { LoginDto } from './dto/login.dto';
 
 @Controller('auth')
 export class LoginController {
+  constructor(private readonly loginService: LoginService) {}
+
   @Post('login')
-  async login(@Body() loginDto: any) {
+  async login(@Body() loginDto: LoginDto) {
     const { email, password } = loginDto;
 
     if (!email || !password) {
       throw new BadRequestException('All fields are required');
     }
 
-    if (email !== 'test@hotel.com' || password !== 'test123') {
-      throw new BadRequestException('Invalid Credentials');
-    }
-
-    return { message: 'Login successful' };
+    return await this.loginService.login(loginDto);
   }
 }

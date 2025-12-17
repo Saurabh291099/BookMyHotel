@@ -1,21 +1,19 @@
-import {Controller, Post, Body, BadRequestException} from "@nestjs/common";
-
+import { Controller, Post, Body, BadRequestException } from "@nestjs/common";
+import { SignupService } from "./signup.service";
+import { SignupDto } from "./dto/signup.dto";
 
 @Controller("auth")
-
 export class SignupController {
+    constructor(private readonly signupService: SignupService) {}
+
     @Post('signup')
-    async signup(@Body() signupDto: any){
-        const {name, email, phone, password } = signupDto;
+    async signup(@Body() signupDto: SignupDto) {
+        const { name, email, phone, password } = signupDto;
 
-        if(!name || !email || !phone || !password) {
-            throw new BadRequestException('All Fields are required');
+        if (!name || !email || !phone || !password) {
+            throw new BadRequestException('All fields are required');
         }
 
-        if (email === 'test@hotel.com'){
-            throw new BadRequestException('Email already exists');
-        }
-
-        return{ message: "User Created successfully"};
+        return await this.signupService.signup(signupDto);
     }
 }
