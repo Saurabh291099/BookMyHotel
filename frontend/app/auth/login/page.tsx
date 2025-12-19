@@ -30,7 +30,7 @@ export default function Login() {
       }
 
       alert(data.message || "Login successful!");
-      router.push("/dashboard");
+      router.push("/hotel");
     } catch (error) {
       alert("An Server Error Occured. Please try again later.");
     }

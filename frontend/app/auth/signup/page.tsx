@@ -14,11 +14,20 @@ export default function Signup() {
     password: "",
     confirmPassword: "",
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error for this field when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
   };
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -33,11 +42,25 @@ export default function Signup() {
       newErrors.confirmPassword = "Passwords do not match";
     }
 
+    // Check if there are any validation errors
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return; // Prevent API call if there are validation errors
+    }
+
+    // Clear any previous errors
+    setErrors({});
+
     try {
       const response = await fetch("http://localhost:4000/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          password: formData.password,
+        }),
       });
       const data = await response.json();
 
@@ -84,8 +107,11 @@ export default function Signup() {
                 placeholder="Your name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full"
+                className={errors.name ? "w-full border-destructive" : "w-full"}
               />
+              {errors.name && (
+                <p className="mt-1 text-sm text-destructive">{errors.name}</p>
+              )}
             </div>
 
             <div>
@@ -99,8 +125,11 @@ export default function Signup() {
                 placeholder="you@example.com"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full"
+                className={errors.email ? "w-full border-destructive" : "w-full"}
               />
+              {errors.email && (
+                <p className="mt-1 text-sm text-destructive">{errors.email}</p>
+              )}
             </div>
 
             <div>
@@ -114,8 +143,11 @@ export default function Signup() {
                 placeholder="+91 9876543210"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full"
+                className={errors.phone ? "w-full border-destructive" : "w-full"}
               />
+              {errors.phone && (
+                <p className="mt-1 text-sm text-destructive">{errors.phone}</p>
+              )}
             </div>
 
             <div>
@@ -129,8 +161,11 @@ export default function Signup() {
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full"
+                className={errors.password ? "w-full border-destructive" : "w-full"}
               />
+              {errors.password && (
+                <p className="mt-1 text-sm text-destructive">{errors.password}</p>
+              )}
             </div>
 
             <div>
@@ -144,8 +179,11 @@ export default function Signup() {
                 placeholder="••••••••"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="w-full"
+                className={errors.confirmPassword ? "w-full border-destructive" : "w-full"}
               />
+              {errors.confirmPassword && (
+                <p className="mt-1 text-sm text-destructive">{errors.confirmPassword}</p>
+              )}
             </div>
 
             <Button type="submit" className="w-full" size="lg">
