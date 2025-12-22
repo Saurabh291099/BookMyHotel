@@ -1,7 +1,7 @@
 "use client";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { WebsiteLayout } from "@/app/Layout/WebsiteLayout";
+import { WebsiteLayout } from "../WebsiteLayout";
 
 const DINING_IMAGE = 'https://images.pexels.com/photos/2291619/pexels-photo-2291619.jpeg';
 

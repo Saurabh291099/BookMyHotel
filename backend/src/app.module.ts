@@ -6,6 +6,8 @@ import { AppService } from './app.service';
 import {SignupModule} from './auth/signup/signup.module';
 import {LoginModule} from './auth/login/login.module';
 import { User } from './entities/user.entity';
+import { HotelModule } from './hotel/hotel.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -31,8 +33,10 @@ import { User } from './entities/user.entity';
       }),
       inject: [ConfigService],
     }),
+    AuthModule,
     SignupModule, 
-    LoginModule
+    LoginModule,
+    HotelModule,
   ],
   controllers: [AppController],
   providers: [AppService],

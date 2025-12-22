@@ -29,8 +29,12 @@ export default function Login() {
         return;
       }
 
-      alert(data.message || "Login successful!");
-      router.push("/hotel");
+      console.log(data.message || "Login successful!");
+      console.log("Token:", data.access_token);
+      console.log("Data:", data);
+      
+      // Redirect to hotel homepage after successful login
+      router.push(`/hotel/${data.user.id}`);
     } catch (error) {
       alert("An Server Error Occured. Please try again later.");
     }

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { WebsiteLayout } from "@/app/Layout/WebsiteLayout";
+import { WebsiteLayout } from "../WebsiteLayout";
 import { SearchResponse, Room } from "@/app/shared/api";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";

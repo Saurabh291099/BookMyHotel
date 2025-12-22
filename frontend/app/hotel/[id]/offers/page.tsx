@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { WebsiteLayout } from "@/app/Layout/WebsiteLayout";
+import { WebsiteLayout } from "../WebsiteLayout";
 import { Offer } from '@/app/shared/api';
 import { Skeleton } from "@/components/ui/skeleton";
 import { OffersGrid } from "@/app/components/ui/hotel/OffersGrid";

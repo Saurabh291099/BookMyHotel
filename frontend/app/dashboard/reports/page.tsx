@@ -1,5 +1,5 @@
 "use client";
-import { DashboardLayout } from "@/app/Layout/DashboardLayout";
+import { DashboardLayout } from "../DashboardLayout";
 import { Card } from "@/components/ui/card";
 
 export default function Reports() {

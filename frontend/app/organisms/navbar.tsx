@@ -21,12 +21,12 @@ const Navbar = ({ logo, navItems }: NavbarProps) => {
         {logo && (
           <Image src={logo.logoUrl} width={40} height={40} alt="website-logo" />
         )}
-        <text className="flex items-center justify-center gap-2">
+        <p className="flex items-center justify-center gap-2">
           <span className="py-1 px-2 text-white bg-primary rounded-sm font-bold">
             H
           </span>
-          <text className="font-bold">HotelHub</text>
-        </text>
+          <span className="font-bold">HotelHub</span>
+        </p>
         <div className="flex items-center gap-16">
           <NavigationMenu>
             <NavigationMenu>

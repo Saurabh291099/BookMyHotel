@@ -2,7 +2,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "lucide-react";
-import { WebsiteLayout } from "@/app/Layout/WebsiteLayout";
+import { WebsiteLayout } from "../WebsiteLayout";
 
 const events = [
   {

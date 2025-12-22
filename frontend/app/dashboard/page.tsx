@@ -1,5 +1,5 @@
 "use client";
-import { DashboardLayout } from "../Layout/DashboardLayout"; 
+import { DashboardLayout } from "./DashboardLayout"; 
 import { Card } from "@/components/ui/card";
 import {
   BarChart,

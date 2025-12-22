@@ -1,15 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
-import { WebsiteLayout } from "@/app/Layout/WebsiteLayout";
-import { BookingWidget, SearchData } from "../components/ui/hotel/BookingWidget";
-import { RoomCard } from "../components/ui/hotel/RoomCard";
-import { OffersGrid } from "../components/ui/hotel/OffersGrid";
-import { ReviewsBlock } from "../components/ui/hotel/ReviewsBlock";
-import { MapSection } from "../components/ui/hotel/MapSection";
+import { WebsiteLayout } from "./WebsiteLayout";
+import { BookingWidget, SearchData } from "@/app/components/ui/hotel/BookingWidget";
+import { RoomCard } from "@/app/components/ui/hotel/RoomCard";
+import { OffersGrid } from "@/app/components/ui/hotel/OffersGrid";
+import { ReviewsBlock } from "@/app/components/ui/hotel/ReviewsBlock";
+import { MapSection } from "@/app/components/ui/hotel/MapSection";
 import { Room, Offer } from '@/app/shared/api';
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Hero } from "../components/ui/hotel/Hero";
+import { Hero } from "@/app/components/ui/hotel/Hero";
 import Link from "next/link";
 
 const HERO_IMAGE = 'https://images.pexels.com/photos/6743737/pexels-photo-6743737.jpeg';

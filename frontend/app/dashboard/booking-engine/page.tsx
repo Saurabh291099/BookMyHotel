@@ -1,6 +1,6 @@
 "use client";
 import { Card } from "@/components/ui/card";
-import { DashboardLayout } from "@/app/Layout/DashboardLayout";
+import { DashboardLayout } from "../DashboardLayout";
 
 export default function BookingEngine() {
   return (
