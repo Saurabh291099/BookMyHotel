@@ -30,7 +30,7 @@ export default function Login() {
       }
 
       console.log(data.message || "Login successful!");
-      console.log("Token:", data.token);
+      console.log("Token:", data.access_token);
       console.log("Data:", data);
       
       // Redirect to hotel homepage after successful login

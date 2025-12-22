@@ -5,10 +5,10 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 export class Hotel {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: string;
 
     @Column()
-    ownerId: number;
+    ownerId: string;
 
     @Column()
     name: string;
@@ -26,7 +26,7 @@ export class Hotel {
     description: string;
 
     @Column()
-    rating: number;
+    rating: string;
 
     @Column()
     imageUrl: string;

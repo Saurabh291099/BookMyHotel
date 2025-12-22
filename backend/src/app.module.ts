@@ -7,6 +7,7 @@ import {SignupModule} from './auth/signup/signup.module';
 import {LoginModule} from './auth/login/login.module';
 import { User } from './entities/user.entity';
 import { HotelModule } from './hotel/hotel.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { HotelModule } from './hotel/hotel.module';
       }),
       inject: [ConfigService],
     }),
+    AuthModule,
     SignupModule, 
     LoginModule,
     HotelModule,

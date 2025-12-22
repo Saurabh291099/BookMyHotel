@@ -18,7 +18,7 @@ export class CreateHotelDto {
     description: string;
 
     @IsNumber()
-    rating: number;
+    rating: string;
 
     @IsString()
     imageUrl: string;
@@ -50,7 +50,7 @@ export class UpdateHotelDto {
 
     @IsOptional()
     @IsNumber()
-    rating: number;
+    rating: string;
 
     @IsOptional()
     @IsString()

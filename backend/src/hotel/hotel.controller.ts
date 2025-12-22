@@ -1,18 +1,21 @@
-import { Body, Controller, Req, Post, Get } from '@nestjs/common';
+import { Body, Controller, Post, Get, UseGuards } from '@nestjs/common';
 import { HotelService } from './hotel.service';
 import { CreateHotelDto } from './dto/hotel.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { GetUser } from '../auth/decorators/user.decorator';
 
 @Controller('hotels')
+@UseGuards(JwtAuthGuard)
 export class HotelController {
   constructor(private hotelService: HotelService) {}
 
   @Post()
-  createHotel(@Body() hotelDto: CreateHotelDto, @Req() req: any) {
-    return this.hotelService.createHotel(hotelDto, req.user.id);
+  createHotel(@Body() hotelDto: CreateHotelDto, @GetUser() user: any) {
+    return this.hotelService.createHotel(hotelDto, user.id);
   }
 
   @Get()
-  getHotelByOwnerId(@Req() req: any) {
-    return this.hotelService.getHotelById(req.user.id);
+  getHotelByOwnerId(@GetUser() user: any) {
+    return this.hotelService.getHotelById(user.id);
   }
 }
