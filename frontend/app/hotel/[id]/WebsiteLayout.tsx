@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import Navbar from "../organisms/navbar";
+import Navbar from "@/app/organisms/navbar";
 
 interface WebsiteLayoutProps {
   children: ReactNode;

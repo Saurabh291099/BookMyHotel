@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { WebsiteLayout } from "@/app/Layout/WebsiteLayout";
+import { WebsiteLayout } from "../WebsiteLayout";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

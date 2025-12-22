@@ -1,5 +1,5 @@
 "use client";
-import { WebsiteLayout } from "@/app/Layout/WebsiteLayout";
+import { WebsiteLayout } from "../WebsiteLayout";
 import { Card } from "@/components/ui/card";
 import { MapPin } from "lucide-react";
 

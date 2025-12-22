@@ -5,8 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
-import { MapSection } from "../../components/ui/hotel/MapSection";
-import { WebsiteLayout } from "@/app/Layout/WebsiteLayout";
+import { MapSection } from "@/app/components/ui/hotel/MapSection";
+import { WebsiteLayout } from "../WebsiteLayout";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
