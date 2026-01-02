@@ -1,0 +1,16 @@
+"use client";
+import { DashboardLayout } from "../DashboardLayout";
+import { Card } from "@/components/ui/card";
+
+export default function Reports() {
+  return (
+    <DashboardLayout>
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold text-foreground">Reports & Analytics</h1>
+        <Card className="p-6">
+          <p className="text-muted-foreground">Reports page coming soon...</p>
+        </Card>
+      </div>
+    </DashboardLayout>
+  );
+}

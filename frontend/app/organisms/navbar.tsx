@@ -3,42 +3,43 @@
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import Image from "next/image";
+import Link from "next/link";
 
-const Navbar = () => {
+interface NavbarProps {
+  logo?: { logoUrl: string; logoLink: string };
+  navItems?: { label: string; link: string }[];
+}
+const Navbar = ({ logo, navItems }: NavbarProps) => {
   return (
     <>
       <div className="flex fixed w-full items-center justify-between py-6 px-16 border-b bg-white">
-        {/* <Image src={''} width={40} height={40} alt="logo"/> */}
-        <text className="flex items-center justify-center gap-2">
-          <span className="py-1 px-2 text-white bg-blue-600 rounded-sm font-bold">H</span>
-          <text className="font-bold">HotelHub</text>
-        </text>
+        {logo && (
+          <Image src={logo.logoUrl} width={40} height={40} alt="website-logo" />
+        )}
+        <p className="flex items-center justify-center gap-2">
+          <span className="py-1 px-2 text-white bg-primary rounded-sm font-bold">
+            H
+          </span>
+          <span className="font-bold">HotelHub</span>
+        </p>
         <div className="flex items-center gap-16">
           <NavigationMenu>
             <NavigationMenu>
               <NavigationMenuList>
-                {[
-                  { label: "Features", href: "/features" },
-                  { label: "Pricing", href: "/pricing" },
-                  { label: "Login", href: "/login" },
-                ].map((item) => (
-                  <NavigationMenuItem key={item.href}>
+                {navItems?.map((item) => (
+                  <NavigationMenuItem key={item.link}>
                     <NavigationMenuLink asChild>
-                      <a
-                        href={item.href}
+                      <Link
+                        href={item.link}
                         className="px-3 py-2 text-sm font-medium hover:underline"
                       >
                         {item.label}
-                      </a>
+                      </Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
