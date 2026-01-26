@@ -1,5 +1,5 @@
 "use client";
-import { WebsiteLayout } from "../WebsiteLayout";
+import { WebsiteLayout } from "../../[id]/WebsiteLayout";
 import { Card } from "@/components/ui/card";
 
 const amenities = [

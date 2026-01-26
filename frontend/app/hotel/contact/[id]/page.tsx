@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { MapSection } from "@/app/components/ui/hotel/MapSection";
-import { WebsiteLayout } from "../WebsiteLayout";
+import { WebsiteLayout } from "../../[id]/WebsiteLayout";
 
 export default function Contact() {
   const [formData, setFormData] = useState({

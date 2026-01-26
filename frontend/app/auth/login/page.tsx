@@ -34,7 +34,8 @@ export default function Login() {
       console.log("Data:", data);
       
       // Redirect to hotel homepage after successful login
-      router.push(`/hotel/${data.user.id}`);
+      router.push(`/hotel/home/${data.user.id}`);
+
     } catch (error) {
       alert("An Server Error Occured. Please try again later.");
     }

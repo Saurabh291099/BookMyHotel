@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -18,7 +18,9 @@ export function WebsiteLayout({
 }: WebsiteLayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isDashboard = pathname?.startsWith("/dashboard");
+  const params = useParams();
+  const hotelId = Array.isArray(params?.id) ? params?.id[0] : params?.id;
+  const isDashboard = pathname?.startsWith("/dashboard"); 
   const isStaff = pathname?.startsWith("/staff");
   const isAdmin = pathname?.startsWith("/admin");
 
@@ -27,94 +29,18 @@ export function WebsiteLayout({
   }
 
   const navLinks = [
-    { label: "Home", link: "/hotel" },
-    { label: "About", link: "/hotel/about" },
-    { label: "Rooms", link: "/hotel/rooms" },
-    { label: "Amenities", link: "/hotel/amenities" },
-    { label: "Offers", link: "/hotel/offers" },
-    { label: "Gallery", link: "/hotel/gallery" },
-    { label: "Events", link: "/hotel/events" },
-    { label: "Local Guide", link: "/hotel/local-guide" },
-    { label: "Contact", link: "/hotel/contact" },
-     ];
+    { label: "Home", link: `/hotel/home/${hotelId}` },
+    { label: "About", link: `/hotel/about/${hotelId}` },
+    { label: "Rooms", link: `/hotel/rooms/${hotelId}` },
+    { label: "Amenities", link: `/hotel/amenities/${hotelId}` },
+    { label: "Offers", link: `/hotel/offers/${hotelId}` },
+    { label: "Gallery", link: `/hotel/gallery/${hotelId}` },
+    { label: "Events", link: `/hotel/events/${hotelId}` },
+    { label: "Local Guide", link: `/hotel/local-guide/${hotelId}` },
+    { label: "Contact", link: `/hotel/contact/${hotelId}` },
+  ];
   return (
     <div className="min-h-screen flex flex-col">
-      {/* {showNav && (
-        <nav className="bg-white border-b border-border sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <Link href="/" className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">H</span>
-                </div>
-                <span className="font-bold text-lg text-foreground">HotelHub</span>
-              </Link>
-
-              <div className="hidden md:flex items-center gap-8">
-                {isHome && (
-                  <>
-                    <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition">
-                      Features
-                    </a>
-                    <a href="#pricing" className="text-sm text-muted-foreground hover:text-foreground transition">
-                      Pricing
-                    </a>
-                  </>
-                )}
-                <Link href="/auth/login" className="text-sm text-muted-foreground hover:text-foreground transition">
-                  Login
-                </Link>
-                <Link href="/auth/signup">
-                  <Button>Get Started</Button>
-                </Link>
-              </div>
-
-              <button
-                className="md:hidden p-2"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
-                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
-
-            {mobileMenuOpen && (
-              <div className="md:hidden pb-4 space-y-2">
-                {isHome && (
-                  <>
-                    <a
-                      href="#features"
-                      className="block px-2 py-2 text-sm text-muted-foreground hover:text-foreground"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Features
-                    </a>
-                    <a
-                      href="#pricing"
-                      className="block px-2 py-2 text-sm text-muted-foreground hover:text-foreground"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Pricing
-                    </a>
-                  </>
-                )}
-                <Link
-                  href="/auth/login"
-                  className="block px-2 py-2 text-sm text-muted-foreground hover:text-foreground"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/auth/signup"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <Button className="w-full">Get Started</Button>
-                </Link>
-              </div>
-            )}
-          </div>
-        </nav>
-      )} */}
       <div className="bg-white border-b border-border sticky top-0 z-50">
         <Navbar navItems={navLinks} />
       </div>
@@ -139,12 +65,18 @@ export function WebsiteLayout({
                 <h4 className="font-semibold mb-4">Product</h4>
                 <ul className="space-y-2 text-slate-400 text-sm">
                   <li>
-                    <Link href="#features" className="hover:text-white transition">
+                    <Link
+                      href="#features"
+                      className="hover:text-white transition"
+                    >
                       Features
                     </Link>
                   </li>
                   <li>
-                    <Link href="#pricing" className="hover:text-white transition">
+                    <Link
+                      href="#pricing"
+                      className="hover:text-white transition"
+                    >
                       Pricing
                     </Link>
                   </li>
