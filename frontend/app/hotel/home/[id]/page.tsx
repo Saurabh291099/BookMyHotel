@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { WebsiteLayout } from "./WebsiteLayout";
+import { WebsiteLayout } from "../../[id]/WebsiteLayout";
 import { BookingWidget, SearchData } from "@/app/components/ui/hotel/BookingWidget";
 import { RoomCard } from "@/app/components/ui/hotel/RoomCard";
 import { OffersGrid } from "@/app/components/ui/hotel/OffersGrid";

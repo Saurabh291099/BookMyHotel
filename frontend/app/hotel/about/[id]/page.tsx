@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { WebsiteLayout } from "../WebsiteLayout";
+import { WebsiteLayout } from "../../[id]/WebsiteLayout";
 
 const HERO_IMAGE = 'https://images.pexels.com/photos/6743737/pexels-photo-6743737.jpeg';
 
