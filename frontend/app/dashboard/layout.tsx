@@ -1,8 +1,7 @@
 "use client";
 import { ReactNode, useState } from "react";
+import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import {
   Menu,
   X,
@@ -16,25 +15,59 @@ import {
   Inbox,
   Briefcase,
 } from "lucide-react";
+import { Button } from "../components/ui/button";
 
 interface DashboardLayoutProps {
   children: ReactNode;
 }
 
-const sidebarLinks = [
-  { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
-  { icon: DoorOpen, label: "Rooms", path: "/dashboard/rooms" },
-  { icon: Calendar, label: "Bookings", path: "/dashboard/bookings" },
-  { icon: Calendar, label: "Booking Engine", path: "/dashboard/booking-engine" },
-  { icon: Users, label: "Guests", path: "/dashboard/guests" },
-  { icon: Briefcase, label: "Staff", path: "/dashboard/staff" },
-  { icon: BarChart3, label: "Reports", path: "/dashboard/reports" },
-  { icon: Settings, label: "Settings", path: "/dashboard/settings" },
-];
-
-export function DashboardLayout({ children }: DashboardLayoutProps) {
+export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
+
+  // const pathname = usePathname();
+  const params = useParams();
+  const hotelId = Array.isArray(params?.id) ? params?.id[0] : params?.id;
+
+  const sidebarLinks = [
+    {
+      icon: LayoutDashboard,
+      label: "Dashboard",
+      path: `/dashboard/${hotelId}`,
+    },
+    { icon: DoorOpen, label: "Rooms", path: `/dashboard/rooms/${hotelId}` },
+    {
+      icon: Calendar,
+      label: "CMS",
+      path: `/dashboard/cms/${hotelId}`,
+    },
+    {
+      icon: Calendar,
+      label: "Bookings",
+      path: `/dashboard/bookings/${hotelId}`,
+    },
+    {
+      icon: Calendar,
+      label: "Booking Engine",
+      path: `/dashboard/booking-engine/${hotelId}`,
+    },
+    { icon: Users, label: "Guests", path: `/dashboard/guests/${hotelId}` },
+    { icon: Briefcase, label: "Staff", path: `/dashboard/staff/${hotelId}` },
+    {
+      icon: BarChart3,
+      label: "Reports",
+      path: `/dashboard/reports/${hotelId}`,
+    },
+    {
+      icon: Settings,
+      label: "Settings",
+      path: `/dashboard/settings/${hotelId}`,
+    },
+  ];
+
+  const viewWebsiteBtn = () => {
+    window.open(`/hotel/home/${hotelId}`, "_blank");
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 flex">
@@ -45,16 +78,18 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         }`}
       >
         <div className="h-16 flex items-center justify-between px-6 border-b border-border">
-          <Link href="/dashboard" className="flex items-center gap-2">
+          <Link
+            href={`/dashboard/home/${hotelId}`}
+            className="flex items-center gap-2"
+          >
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">H</span>
             </div>
-            <span className="font-bold text-lg text-foreground hidden lg:block">HotelHub</span>
+            <span className="font-bold text-lg text-foreground hidden lg:block">
+              HotelHub
+            </span>
           </Link>
-          <button
-            className="md:hidden"
-            onClick={() => setSidebarOpen(false)}
-          >
+          <button className="md:hidden" onClick={() => setSidebarOpen(false)}>
             <X size={24} />
           </button>
         </div>
@@ -83,8 +118,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         </nav>
 
         <div className="border-t border-border p-4">
-          {/* <Button */}
-            {/*   variant="outline"
+          <Button
+            variant="outline"
             className="w-full justify-start gap-2"
             asChild
           >
@@ -92,7 +127,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               <LogOut size={20} />
               Logout
             </Link>
-          </Button> */}
+          </Button>
         </div>
       </div>
 
@@ -108,6 +143,14 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           </button>
           <div className="flex-1" />
           <div className="flex items-center gap-4">
+            <Button
+              variant="ghost"
+              onClick={viewWebsiteBtn}
+              className="p-2 hover:bg-slate-100 rounded-lg"
+            >
+              <Briefcase size={20} />
+              View Website
+            </Button>
             <button className="p-2 hover:bg-slate-100 rounded-lg">
               <Inbox size={20} />
             </button>
@@ -118,9 +161,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         </div>
 
         {/* Content */}
-        <main className="p-6 md:p-8">
-          {children}
-        </main>
+        <main className="p-6 md:p-8">{children}</main>
       </div>
 
       {/* Mobile Overlay */}
