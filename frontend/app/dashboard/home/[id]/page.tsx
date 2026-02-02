@@ -1,5 +1,5 @@
 "use client";
-import { DashboardLayout } from "./DashboardLayout"; 
+
 import { Card } from "@/components/ui/card";
 import {
   BarChart,
@@ -33,9 +33,8 @@ const revenueData = [
   { month: "Jun", revenue: 85000 },
 ];
 
-export default function DashboardHome() {
+export default function DashboardHome({params}: {params: {id: string}}) {
   return (
-    <DashboardLayout>
       <div className="space-y-8">
         {/* Header */}
         <div>
@@ -219,6 +218,5 @@ export default function DashboardHome() {
           </div>
         </Card>
       </div>
-    </DashboardLayout>
   );
 }

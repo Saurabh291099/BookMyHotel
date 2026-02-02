@@ -32,10 +32,11 @@ export default function Login() {
       console.log(data.message || "Login successful!");
       console.log("Token:", data.access_token);
       console.log("Data:", data);
-      
-      // Redirect to hotel homepage after successful login
-      router.push(`/hotel/home/${data.user.id}`);
 
+      // Redirect to hotel homepage after successful login
+      // router.push(`/hotel/home/${data.user.id}`);
+      // window.open(`/hotel/home/${data.user.id}`, "_blank");
+      window.open(`/dashboard/home/${data.user.id}`, "_blank");
     } catch (error) {
       alert("An Server Error Occured. Please try again later.");
     }
