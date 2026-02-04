@@ -16,6 +16,13 @@ import {
   Briefcase,
 } from "lucide-react";
 import { Button } from "../components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "../components/ui/dropdown-menu";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -39,7 +46,45 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     {
       icon: Calendar,
       label: "CMS",
-      path: `/dashboard/cms/${hotelId}`,
+      // path: `/dashboard/cms/${hotelId}`,
+      children: [
+        {
+          label: "Home",
+          path: `/dashboard/cms/home/${hotelId}`,
+        },
+        {
+          label: "About",
+          path: `/dashboard/cms/about/${hotelId}`,
+        },
+        {
+          label: "Rooms",
+          path: `/dashboard/cms/rooms/${hotelId}`,
+        },
+        {
+          label: "Amenities",
+          path: `/dashboard/cms/amenities/${hotelId}`,
+        },
+        {
+          label: "Offers",
+          path: `/dashboard/cms/offers/${hotelId}`,
+        },
+        {
+          label: "Gallery",
+          path: `/dashboard/cms/gallery/${hotelId}`,
+        },
+        {
+          label: "Events",
+          path: `/dashboard/cms/events/${hotelId}`,
+        },
+        {
+          label: "Local Guide",
+          path: `/dashboard/cms/local-guide/${hotelId}`,
+        },
+        {
+          label: "Contact",
+          path: `/dashboard/cms/contact/${hotelId}`,
+        },
+      ],
     },
     {
       icon: Calendar,
@@ -97,22 +142,75 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-2">
           {sidebarLinks.map((link) => {
             const Icon = link.icon;
-            const isActive = pathname === link.path;
+            const hasChildren = Array.isArray(link.children);
 
+            // CMS active if any child route is active
+            const isActive = hasChildren
+              ? link?.children?.some((child) => pathname === child.path)
+              : pathname === link.path;
+
+            // ---------------- NORMAL LINK ----------------
+            if (!hasChildren) {
+              return (
+                <Link
+                  key={link.path}
+                  href={link.path || ""}
+                  onClick={() => setSidebarOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
+                    isActive
+                      ? "bg-primary text-white"
+                      : "text-muted-foreground hover:bg-slate-100"
+                  }`}
+                >
+                  <Icon size={20} />
+                  <span className="font-medium">{link.label}</span>
+                </Link>
+              );
+            }
+
+            // ---------------- DROPDOWN (CMS) ----------------
             return (
-              <Link
-                key={link.path}
-                href={link.path}
-                onClick={() => setSidebarOpen(false)}
+              <div
+                key={link.label}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
                   isActive
                     ? "bg-primary text-white"
                     : "text-muted-foreground hover:bg-slate-100"
                 }`}
               >
-                <Icon size={20} />
-                <span className="font-medium">{link.label}</span>
-              </Link>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Link
+                      href={link.path || "#"}
+                      className="p-0 flex items-center gap-3 w-full"
+                    >
+                      <Icon size={20} />
+                      <span className="font-medium">{link.label}</span>
+                    </Link>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    {link.children?.map((child) => {
+                      const childActive = pathname === child.path;
+                      return (
+                        <DropdownMenuItem>
+                          <Link
+                            key={child.path}
+                            href={child.path}
+                            onClick={() => setSidebarOpen(false)}
+                            className={`block px-3 py-2 w-full rounded-md text-sm transition ${
+                              childActive
+                                ? "bg-primary/10 text-primary font-medium"
+                                : "text-muted-foreground hover:bg-slate-100"
+                            }`}
+                          >
+                            {child.label}
+                          </Link>
+                        </DropdownMenuItem>
+                      );
+                    })}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             );
           })}
         </nav>
