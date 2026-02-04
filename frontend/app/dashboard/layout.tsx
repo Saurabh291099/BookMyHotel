@@ -40,7 +40,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     {
       icon: LayoutDashboard,
       label: "Dashboard",
-      path: `/dashboard/${hotelId}`,
+      path: `/dashboard/home/${hotelId}`,
     },
     { icon: DoorOpen, label: "Rooms", path: `/dashboard/rooms/${hotelId}` },
     {
