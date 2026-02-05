@@ -8,6 +8,7 @@ import {LoginModule} from './auth/login/login.module';
 import { User } from './entities/user.entity';
 import { HotelModule } from './hotel/hotel.module';
 import { AuthModule } from './auth/auth.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { AuthModule } from './auth/auth.module';
     SignupModule, 
     LoginModule,
     HotelModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService],
