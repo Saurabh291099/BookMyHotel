@@ -30,6 +30,7 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const pathname = usePathname();
 
   // const pathname = usePathname();
@@ -178,25 +179,29 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     : "text-muted-foreground hover:bg-slate-100"
                 }`}
               >
-                <DropdownMenu>
+                <DropdownMenu
+                  open={openDropdown === link.label}
+                  onOpenChange={(open) =>
+                    setOpenDropdown(open ? link.label : null)
+                  }
+                >
                   <DropdownMenuTrigger asChild>
-                    <Link
-                      href={link.path || "#"}
-                      className="p-0 flex items-center gap-3 w-full"
-                    >
+                    <button className="p-0 flex items-center gap-3 w-full hover:cursor-pointer">
                       <Icon size={20} />
                       <span className="font-medium">{link.label}</span>
-                    </Link>
+                    </button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     {link.children?.map((child) => {
                       const childActive = pathname === child.path;
                       return (
-                        <DropdownMenuItem>
+                        <DropdownMenuItem key={child.path}>
                           <Link
-                            key={child.path}
                             href={child.path}
-                            onClick={() => setSidebarOpen(false)}
+                            onClick={() => {
+                              setSidebarOpen(false);
+                              setOpenDropdown(null);
+                            }}
                             className={`block px-3 py-2 w-full rounded-md text-sm transition ${
                               childActive
                                 ? "bg-primary/10 text-primary font-medium"
