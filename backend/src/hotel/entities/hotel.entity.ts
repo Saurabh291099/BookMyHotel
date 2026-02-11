@@ -1,10 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('hotels')
-
-
 export class Hotel {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column()
@@ -22,13 +20,12 @@ export class Hotel {
     @Column()
     country: string;
 
-    @Column()
+    @Column({ nullable: true })
     description: string;
 
-    @Column()
+    @Column({ nullable: true })
     rating: string;
 
-    @Column()
+    @Column({ nullable: true })
     imageUrl: string;
-
 }

@@ -3,15 +3,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from '../../entities/user.entity';
+import { Hotel } from '../../hotel/entities/hotel.entity';
 import { LoginDto } from './dto/login.dto';
+import { JwtService } from "@nestjs/jwt";
 
-
-import {JwtService} from "@nestjs/jwt";
 @Injectable()
 export class LoginService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(Hotel)
+    private hotelRepository: Repository<Hotel>,
     private jwtService: JwtService,
   ) {}
 
@@ -38,18 +40,22 @@ export class LoginService {
     const payload = { sub: user.id, email: user.email };
 
     // Sign the token
-    const access_token = this.jwtService.sign(payload); 
+    const access_token = this.jwtService.sign(payload);
+
+    // Get user's hotel
+    const hotel = await this.hotelRepository.findOne({
+      where: { ownerId: user.id },
+    });
 
     // Return user without password
     const { password: _, ...userWithoutPassword } = user;
-
 
     // return token and user info
     return {
       message: 'Login successful',
       access_token,
       user: userWithoutPassword,
+      hotelId: hotel?.id || null,
     };
   }
 }
-

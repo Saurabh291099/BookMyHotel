@@ -8,6 +8,7 @@ import {LoginModule} from './auth/login/login.module';
 import { User } from './entities/user.entity';
 import { HotelModule } from './hotel/hotel.module';
 import { AuthModule } from './auth/auth.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 
 @Module({
@@ -38,13 +39,14 @@ import { AuthModule } from './auth/auth.module';
         // ✅ LOCAL DEVELOPMENT (Laptop)
         return {
           type: 'postgres',
-          host: 'localhost',
-          port: 5432,
-          username: 'hotel_user',
-          password: 'your_local_password',
-          database: 'hotel_app',
+          host: configService.get<string>('DB_HOST', 'localhost'),
+          port: configService.get<number>('DB_PORT', 5432),
+          username: configService.get<string>('DB_USERNAME', 'hotel_user'),
+          password: configService.get<string>('DB_PASSWORD', 'StrongPassword123'),
+          database: configService.get<string>('DB_DATABASE', 'hotel_app'),
           autoLoadEntities: true,
-          synchronize: true,
+          synchronize: configService.get<boolean>('DB_SYNCHRONIZE', true),
+          logging: configService.get<boolean>('DB_LOGGING', true),
         };
       },
     }),
@@ -53,6 +55,7 @@ import { AuthModule } from './auth/auth.module';
     SignupModule,
     LoginModule,
     HotelModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService],
