@@ -4,12 +4,17 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from '../../entities/user.entity';
 import { SignupDto } from './dto/signup.dto';
+import { Hotel } from '../../hotel/entities/hotel.entity';
+import { DashboardService } from '../../dashboard/dashboard.service';
 
 @Injectable()
 export class SignupService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(Hotel)
+    private hotelRepository: Repository<Hotel>,
+    private dashboardService: DashboardService,
   ) {}
 
   async signup(signupDto: SignupDto) {
@@ -40,11 +45,29 @@ export class SignupService {
       // Save user to database
       const savedUser = await this.userRepository.save(user);
 
+      // Create default hotel for user
+      const hotel = this.hotelRepository.create({
+        ownerId: savedUser.id,
+        name: `${name}'s Hotel`,
+        address: '',
+        city: '',
+        country: '',
+        description: '',
+        rating: '0',
+        imageUrl: '',
+      });
+
+      const savedHotel = await this.hotelRepository.save(hotel);
+
+      // Create dashboard for the hotel
+      await this.dashboardService.createDashboard(savedHotel.id);
+
       // Return user without password
       const { password: _, ...userWithoutPassword } = savedUser;
       return {
         message: 'User created successfully',
         user: userWithoutPassword,
+        hotelId: savedHotel.id,
       };
     } catch (error) {
       if (error instanceof BadRequestException) {

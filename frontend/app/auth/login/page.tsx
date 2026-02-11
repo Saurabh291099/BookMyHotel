@@ -33,10 +33,18 @@ export default function Login() {
       console.log("Token:", data.access_token);
       console.log("Data:", data);
 
-      // Redirect to hotel homepage after successful login
-      // router.push(`/hotel/home/${data.user.id}`);
-      // window.open(`/hotel/home/${data.user.id}`, "_blank");
-      window.open(`/dashboard/home/${data.user.id}`, "_blank");
+      // Store token in localStorage for future requests
+      localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("userId", data.user.id);
+      localStorage.setItem("hotelId", data.hotelId);
+
+      // Redirect to dashboard with hotel ID
+      if (data.hotelId) {
+        window.open(`/dashboard/home/${data.hotelId}`, "_blank");
+      } else {
+        // If no hotel ID, redirect to hotel setup
+        window.open(`/onboarding/setup-hotel/${data.user.id}`, "_blank");
+      }
     } catch (error) {
       alert("An Server Error Occured. Please try again later.");
     }
