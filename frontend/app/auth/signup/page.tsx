@@ -70,7 +70,8 @@ export default function Signup() {
       }
 
       alert(data.message || "Signup successful!");
-      router.push("/auth/login");
+      // Redirect to hotel setup with the newly created hotel ID
+      router.push(`/onboarding/setup-hotel/${data.hotelId}`);
     } catch (error) {
       alert("An Server Error Occured. Please try again later.");
     }

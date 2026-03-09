@@ -33,9 +33,15 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const pathname = usePathname();
 
-  // const pathname = usePathname();
   const params = useParams();
   const hotelId = Array.isArray(params?.id) ? params?.id[0] : params?.id;
+
+  // Debug logging
+  console.log("Dashboard Layout Debug:", {
+    params,
+    hotelId,
+    pathname,
+  });
 
   const sidebarLinks = [
     {
